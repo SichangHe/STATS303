@@ -42,7 +42,7 @@ L(W)=\Vert W^TX-Y\Vert^2=W^TX^TXW-2W^TX^TY+Y^TY\\
 ⇒ \hat W=(X^TX)^{-1}X^TY
 $$
 
-### regularization
+### regularization in lasso
 
 $$
 \argmin_W\left[
@@ -98,3 +98,44 @@ solution: sequential minimal optimization (SMO)
 
 - fix all but 2 $\lambda_i$, and iterate
 - 2 variable because $\sum_{i=1}^N\lambda_iy_i=0$
+
+## dimensionality reduction
+
+- mean: $\frac{1}{N}X^T\vec1$
+- covariance: $\frac{1}{N}X^THX$
+    - centering matrix: $H:=I-\frac{1}{N}\vec1{\vec1}^T$
+        - $H^T=H,H^2=H$
+    - proof:
+        $$
+        S=\frac{1}{N}\sum_{i=1}^N\Vert X_i-\bar X\Vert^2=
+        \frac{1}{N}\Vert\begin{bmatrix}
+            X_1-\bar X&\cdots&X_N-\bar X
+        \end{bmatrix}\Vert^2
+        $$
+
+maximize variance:
+
+$$
+\argmax_{\vec u}\vec u^TS\vec u
+\text{ s.t. }\vec u^T\vec u=1\\
+⇒ \argmax_\lambda L(\vec u,\lambda)=\vec u^TS\vec u+\lambda(1-\vec u^T\vec u)\\
+⇒ S\vec u=\lambda\vec u
+$$
+
+minimize distance between full projection ($p$-dimensional) and
+principal component analysis (PCA, $q$-dimensional):
+
+$\tilde X=X_i-\bar X$
+
+objective:
+
+$$
+\min\frac{1}{N}\sum_{i=1}^N\Vert\tilde X-\tilde X'\Vert^2=
+\frac{1}{N}\sum_{i=1}^N\Vert\tilde X-\tilde X'\Vert^2=
+$$
+
+$$
+⇒ \argmin_{\vec u_k}\sum_{k=q+1}^p\vec u_k^TS\vec u_k
+\text{ s.t. }\vec u_k^T\vec u_k=1\\
+⇒ S\vec u_k=\lambda\vec u_k
+$$
