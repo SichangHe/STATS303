@@ -99,7 +99,9 @@ solution: sequential minimal optimization (SMO)
 - fix all but 2 $\lambda_i$, and iterate
 - 2 variable because $\sum_{i=1}^N\lambda_iy_i=0$
 
-## dimensionality reduction
+## dimensionality reduction by principal component analysis (PCA)
+
+lossy transformation from $p$ to $q$ dimension
 
 - mean: $\frac{1}{N}X^T\vec1$
 - covariance: $\frac{1}{N}X^THX$
@@ -113,7 +115,7 @@ solution: sequential minimal optimization (SMO)
         \end{bmatrix}\Vert^2
         $$
 
-maximize variance:
+maximize variance
 
 $$
 \argmax_{\vec u}\vec u^TS\vec u
@@ -125,16 +127,20 @@ $$
 minimize distance between full projection ($p$-dimensional) and
 principal component analysis (PCA, $q$-dimensional):
 
-$\tilde X=X_i-\bar X$
+- centering: $\tilde X_i=X_i-\bar X$
+- lossless transformation with $\vec u_k$:
+    $X_i'=\sum_{k=1}^p(\tilde X_i^T\vec u_k)\vec u_k$
+- PCA transformation:
+    $\hat X_i=\sum_{k=1}^q(\tilde X_i^T\vec u_k)\vec u_k$
 
 objective:
 
 $$
-\min\frac{1}{N}\sum_{i=1}^N\Vert\tilde X-\tilde X'\Vert^2=
-\frac{1}{N}\sum_{i=1}^N\Vert\tilde X-\tilde X'\Vert^2=
-$$
-
-$$
+\argmin_{\vec u_k}\frac{1}{N}\sum_{i=1}^N\Vert\hat X_i-X_i'\Vert^2=
+\frac{1}{N}\sum_{i=1}^N\left
+    \Vert\sum_{k=q+1}^p(\tilde X_i^T\vec u_k)\vec u_k
+\right\Vert^2=
+\frac{1}{N}\sum_{i=1}^N\sum_{k=q+1}^p(\tilde X_i^T\vec u_k)^2\\
 ⇒ \argmin_{\vec u_k}\sum_{k=q+1}^p\vec u_k^TS\vec u_k
 \text{ s.t. }\vec u_k^T\vec u_k=1\\
 ⇒ S\vec u_k=\lambda\vec u_k
