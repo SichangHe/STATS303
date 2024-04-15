@@ -21,7 +21,7 @@ can you find the complete form for matrix $B$ where $B=\sum_{i=1}^n H^i$
     then
 
     $$
-    B=n\mathbb I_N-\vec1_N{\vec1_N}^T=
+    B=n\mathbb I_n-\vec1_n{\vec1_n}^T=
     \begin{bmatrix}
         n-1 & -1 & \cdots & -1\\
         -1 & n-1 & \cdots & -1\\
@@ -34,6 +34,87 @@ can you find the complete form for matrix $B$ where $B=\sum_{i=1}^n H^i$
 
     - Please numerically compute the result after applying principle component
     analysis to reduce these data to 1 dimension.
+
+    **Answer**:
+
+    Given:
+    $$
+    X=\begin{bmatrix}
+        -1 & 0\\
+        0 & 0\\
+        2 & 1\\
+        0 & 1\\
+        -1 & -2
+    \end{bmatrix},\quad N=5\\
+    \Rightarrow\bar X=\frac{1}{N}X^T\vec1_N=
+    \frac{1}{5}\begin{bmatrix}
+        -1 & 0 & 2 & 0 & -1\\
+        0 & 0 & 1 & 1 & -2
+    \end{bmatrix}\begin{bmatrix}
+        1\\1\\1\\1\\1
+    \end{bmatrix}=
+    \begin{bmatrix}
+        0\\
+        0
+    \end{bmatrix},\\
+    H=\mathbb I_N-\frac{1}{N}\vec1_n{\vec1_n}^T=
+    \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0\\
+        0 & 0 & 1 & 0 & 0\\
+        0 & 0 & 0 & 1 & 0\\
+        0 & 0 & 0 & 0 & 1
+    \end{bmatrix}-\frac{1}{5}\begin{bmatrix}
+        1 & 1 & 1 & 1 & 1\\
+        1 & 1 & 1 & 1 & 1\\
+        1 & 1 & 1 & 1 & 1\\
+        1 & 1 & 1 & 1 & 1\\
+        1 & 1 & 1 & 1 & 1
+    \end{bmatrix}\\=
+    \begin{bmatrix}
+        \frac{4}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & \frac{4}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & -\frac{1}{5} & \frac{4}{5} & -\frac{1}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & \frac{4}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & \frac{4}{5}
+    \end{bmatrix},\\
+    S=\frac{1}{N}X^THX\\=
+    \frac{1}{5}\begin{bmatrix}
+        -1 & 0 & 2 & 0 & -1\\
+        0 & 0 & 1 & 1 & -2
+    \end{bmatrix}\begin{bmatrix}
+        \frac{4}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & \frac{4}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & -\frac{1}{5} & \frac{4}{5} & -\frac{1}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & \frac{4}{5} & -\frac{1}{5}\\
+        -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & -\frac{1}{5} & \frac{4}{5}
+    \end{bmatrix}\begin{bmatrix}
+        -1 & 0\\
+        0 & 0\\
+        2 & 1\\
+        0 & 1\\
+        -1 & -2
+    \end{bmatrix}\\=
+    \frac{1}{5}\begin{bmatrix}
+        -1 & 0 & 2 & 0 & -1\\
+        0 & 0 & 1 & 1 & -2
+    \end{bmatrix}\begin{bmatrix}
+        -1 & 0\\
+        0 & 0\\
+        2 & 1\\
+        0 & 1\\
+        -1 & -2
+    \end{bmatrix}=
+    \frac{1}{5}\begin{bmatrix}
+        6 & 4\\
+        4 & 6
+    \end{bmatrix}\\=
+    \begin{bmatrix}
+        \frac{6}{5} & \frac{4}{5}\\
+        \frac{4}{5} & \frac{6}{5}
+    \end{bmatrix}.
+    $$
+
     - Can you code the whole process and visualize the result?
 
 1. Defining the kernel function as $k\left(x_i,
