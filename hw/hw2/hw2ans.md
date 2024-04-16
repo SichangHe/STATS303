@@ -168,7 +168,7 @@ can you find the complete form for matrix $B$ where $B=\sum_{i=1}^n H^i$
     \Rightarrow u_{11}=u_{12}.
     $$
 
-    Let $u_{11}=1$, then $u_{12}=1$.
+    Let $|\vec u_1|=1$, then $u_{11}=u_{12}=\frac{\sqrt 2}{2}$.
 
     Project the data to the eigenvector:
 
@@ -183,18 +183,19 @@ can you find the complete form for matrix $B$ where $B=\sum_{i=1}^n H^i$
         0 & 1\\
         -1 & -2
     \end{bmatrix}\begin{bmatrix}
-        1\\1
+        \frac{\sqrt 2}{2}\\\frac{\sqrt 2}{2}
     \end{bmatrix}\vec u_1=
     \begin{bmatrix}
-        -1\\
+        -\frac{\sqrt 2}{2}\\
         0\\
-        3\\
-        1\\
-        -3
+        3\frac{\sqrt 2}{2}\\
+        \frac{\sqrt 2}{2}\\
+        -3\frac{\sqrt 2}{2}
     \end{bmatrix}\vec u_1.
     $$
 
-    That is, the data transformed to 1 dimension are $-1,0,3,1,-3$.
+    That is, the data transformed to 1 dimension are
+    $(-\frac{\sqrt 2}{2},0,3\frac{\sqrt 2}{2},\frac{\sqrt 2}{2},-3\frac{\sqrt 2}{2})$.
 
     - Can you code the whole process and visualize the result?
 
@@ -210,9 +211,6 @@ can you find the complete form for matrix $B$ where $B=\sum_{i=1}^n H^i$
         S = cov_X / norm(cov_X)
 
         lambdas, u_vecs = eig(S)
-        sorted_indices = np.argsort(lambdas)[::-1]
-        u_vecs = u_vecs[:, sorted_indices]
-        u_1 = u_vecs[:, 0]
 
         X_projected = X_tilde @ u_vecs
         X_hat = X_projected[:, 0]

@@ -9,9 +9,6 @@ cov_X = np.cov(X_tilde.T)
 S = cov_X / norm(cov_X)
 
 lambdas, u_vecs = eig(S)
-sorted_indices = np.argsort(lambdas)[::-1]
-u_vecs = u_vecs[:, sorted_indices]
-u_1 = u_vecs[:, 0]
 
 X_projected = X_tilde @ u_vecs
 X_hat = X_projected[:, 0]
