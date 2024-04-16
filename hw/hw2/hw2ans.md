@@ -115,6 +115,87 @@ can you find the complete form for matrix $B$ where $B=\sum_{i=1}^n H^i$
     \end{bmatrix}.
     $$
 
+    To maximize covariance, let:
+
+    $$
+    S\vec{u}:= \lambda\vec{u}\\
+    \Rightarrow (S - \lambda \mathbb I)\vec{u} = \vec0\\
+    \Rightarrow \det(S - \lambda \mathbb I) = 0\\
+    \Rightarrow \det\left(\begin{bmatrix}
+        \frac{6}{5} - \lambda & \frac{4}{5} \\
+        \frac{4}{5} & \frac{6}{5} - \lambda
+    \end{bmatrix}\right
+    ) = 0\\
+    \Rightarrow \left(\frac{6}{5} - \lambda\right)^2 -
+    \left(\frac{4}{5}\right)^2 = 0 \\
+    \Rightarrow \lambda = \frac{6}{5} \pm \frac{4}{5}\\
+    \Rightarrow \lambda_1 = 2,\ \lambda_2= \frac{2}{5}.
+    $$
+
+    For PCA to $q=1$ dimension,
+    we choose the eigenvector corresponding to the largest eigenvalue
+    $\lambda_1$:
+
+    $$
+    (S-\lambda_1\mathbb I)\vec{u}_1:=\vec0\\
+    \Rightarrow \begin{bmatrix}
+        \frac{6}{5} - 2 & \frac{4}{5} \\
+        \frac{4}{5} & \frac{6}{5} - 2
+    \end{bmatrix}\begin{bmatrix}
+        u_{11}\\
+        u_{12}
+    \end{bmatrix}=\begin{bmatrix}
+        0\\0
+    \end{bmatrix}\\
+    \Rightarrow \begin{bmatrix}
+        -\frac{4}{5} & \frac{4}{5} \\
+        \frac{4}{5} & -\frac{4}{5}
+    \end{bmatrix}\begin{bmatrix}
+        u_{11}\\
+        u_{12}
+    \end{bmatrix}=\begin{bmatrix}
+        0\\0
+    \end{bmatrix}\\
+    \Rightarrow \begin{bmatrix}
+        -1 & 1 \\
+        1 & -1
+    \end{bmatrix}\begin{bmatrix}
+        u_{11}\\
+        u_{12}
+    \end{bmatrix}=\begin{bmatrix}
+        0\\0
+    \end{bmatrix}\\
+    \Rightarrow u_{11}=u_{12}.
+    $$
+
+    Let $u_{11}=1$, then $u_{12}=1$.
+
+    Project the data to the eigenvector:
+
+    $$
+    \hat X_i=\sum_{k=1}^q(\tilde X_i^T\vec u_k)\vec u_k=
+    ((X_i-\bar X)^T\vec u_1)\vec u_1=
+    (X_i^T\vec u_1)\vec u_1\\
+    \Rightarrow \hat X=\begin{bmatrix}
+        -1 & 0\\
+        0 & 0\\
+        2 & 1\\
+        0 & 1\\
+        -1 & -2
+    \end{bmatrix}\begin{bmatrix}
+        1\\1
+    \end{bmatrix}\vec u_1=
+    \begin{bmatrix}
+        -1\\
+        0\\
+        3\\
+        1\\
+        -3
+    \end{bmatrix}\vec u_1.
+    $$
+
+    That is, the data transformed to 1 dimension are $-1,0,3,1,-3$.
+
     - Can you code the whole process and visualize the result?
 
 1. Defining the kernel function as $k\left(x_i,
