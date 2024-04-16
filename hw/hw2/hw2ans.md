@@ -336,6 +336,41 @@ after the mapping.
 1. If we treat Gibbs sampling as a special case of MH method,
 what's the formula for the acceptance rate?
 Please simplify the function of acceptance rate.
+
+    **Answer**:
+
+    In the MH method:
+
+    $$
+    Q'_{x,x^*}:=α(x,x^*)Q_{x,x^*},\quad
+    α(x,x^*):=\min \left(
+        1, \frac{p(x^*)Q_{x^*,x}}{p(x)Q_{x,x^*}}
+    \right).
+    $$
+
+    In Gibbs sampling:
+    $$
+    x_{-i}:=\{x_1\ldots x_{i-1},x_{i+1}\ldots\},\quad
+    p(x_{-i}^*)=p(x_{-i}),\quad
+    Q_{x,x^*}:=p(x_i^*|x_{-1})\\
+    \Rightarrow α(x,x^*)=\min \left(
+        1, \frac{p(x^*)p(x_i|x_{-1}^*)}{p(x)p(x_i^*|x_{-1})}
+    \right),
+    $$
+    which is the formula for the acceptance rate.
+
+    By Bayes' theorem:
+    $$
+    p(x)=p(x_i|x_{-1})p(x_{-i})\\
+    \Rightarrow
+    \frac{p(x^*)p(x_i|x_{-i}^*)}{p(x)p(x_i^*|x_{-i})}=
+    \frac{p(x_i^*|x_{-i}^*)p(x_{-i}^*)p(x_i|x_{-i}^*)}
+        {p(x_i|x_{-i})p(x_{-i})p(x_i^*|x_{-i})}=
+    \frac{p(x_i^*|x_{-i})p(x_{-i})p(x_i|x_{-i})}
+        {p(x_i|x_{-i})p(x_{-i})p(x_i^*|x_{-i})}=1\\
+    \Rightarrow\alpha=\min(1,1)=1.
+    $$
+
 1. Please implement the MH algorithm to select 10000 samples from an exponential
 distribution:
 
