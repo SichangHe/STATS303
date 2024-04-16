@@ -7,21 +7,16 @@ X_mean = np.mean(X, axis=0)
 X_tilde = X - X_mean
 cov_X = np.cov(X_tilde.T)
 S = cov_X / norm(cov_X)
-
 lambdas, u_vecs = eig(S)
-
 X_projected = X_tilde @ u_vecs
 X_hat = X_projected[:, 0]
 print(f"Transformed data to 1 dimension:\n{X_hat}")
-
 fig, axes = plt.subplots(1, 2, figsize=(10, 5))
-
 # X.
 axes[0].scatter(X[:, 0], X[:, 1], marker="x")
 axes[0].set_title("Original Data")
 axes[0].set_xlabel("x1")
 axes[0].set_ylabel("x2")
-
 # Transformed.
 axes[1].scatter(
     X_projected[:, 0],
@@ -41,6 +36,5 @@ axes[1].set_title("Lossless and PCA Transformed Data")
 axes[1].set_xlabel("u1")
 axes[1].set_ylabel("u2")
 axes[1].legend()
-
 plt.tight_layout()
 plt.show()
