@@ -257,16 +257,81 @@ can you find the complete form for matrix $B$ where $B=\sum_{i=1}^n H^i$
 
         ![Visualized PCA](q2plot.png)
 
-1. Defining the kernel function as $k\left(x_i,
-x_j\right)$ which indicates the inner product for $x_i$ and $x_j$ after the
-mapping.
+1. Defining the kernel function as $k\left(\vec x_i,
+\vec x_j\right)$ which indicates the inner product for $\vec x_i$ and $\vec x_j$
+after the mapping.
 
     - Please write down the general form of lagrange multiplier objective
     function for kernel hard-margin SVM.
+
+        **Answer**:
+
+        $$
+        \argmin_{\lambda_i\ge0}(-\hat L),\\\text{where}\quad
+            -\hat L=\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N
+            \lambda_i\lambda_jy_iy_jk(\vec x_i,\vec x_j)-
+            \sum_{i=1}^N\lambda_i.
+        $$
     - Assuming that we are going to apply SMO algorithm to solve it,
     by fixing $\lambda_3, . . \lambda_N$,
     please write down the detailed process and show the final form of the
     objective function in terms of $\lambda_1$
+
+    **Answer**:
+
+    $$
+    \sum_{i=1}^N\lambda_iy_i=0,\quad
+    c_0:=\frac{y_1}{y_2},\quad
+    c_1:=\frac{\sum_{i=3}^N\lambda_iy_i}{y_2}\\
+    \Rightarrow\lambda_2=-\frac{\lambda_1y_1+\sum_{i=3}^N\lambda_iy_i}{y_2}=
+    -c_0\lambda_1-c_1\\
+    \Rightarrow -\hat L=\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N
+    \lambda_i\lambda_jy_iy_jk(\vec x_i,\vec x_j)-
+    \sum_{i=1}^N\lambda_i\\=
+    \frac{1}{2}\lambda_1^2\underbrace{y_1^2k(\vec x_1,\vec x_1)}_{=:c_2}+
+    \frac{1}{2}\lambda_2^2\underbrace{y_2^2k(\vec x_2,\vec x_2)}_{=:c_3}+
+    \lambda_1\lambda_2\underbrace{y_1y_2k(\vec x_1,\vec x_2)}_{=:c_4}+
+    \underbrace{\frac{1}{2}\sum_{i=3}^N\sum_{j=3}^N
+    \lambda_i\lambda_jy_iy_jk(\vec x_i,\vec x_j)}_{=:c_5}-
+    \lambda_1-\lambda_2-\underbrace{\sum_{i=3}^N\lambda_i}_{=:c_6}\\=
+    \frac{1}{2}c_2\lambda_1^2
+    \underbrace{+\frac{1}{2}c_3(-c_0\lambda_1-c_1)^2}_{
+        =\frac{1}{2}c_3(c_0^2\lambda_1^2+2c_0c_1\lambda_1+c_1^2)=
+        \frac{1}{2}c_3c_0^2\lambda_1^2+c_3c_0c_1\lambda_1+\frac{1}{2}c_3c_1^2
+    }
+    \underbrace{+c_4\lambda_1(-c_0\lambda_1-c_1)}_{
+        =-c_4c_0\lambda_1^2-c_4c_1\lambda_1
+    }-
+    \lambda_1\underbrace{-(c_0\lambda_1-c_1)}_{
+        =-c_0\lambda_1+c_1
+    }+
+    c_5-c_6\\[12pt]=
+    \left(\frac{1}{2}c_2+\frac{1}{2}c_3c_0^2-c_4c_0\right)\lambda_1^2+
+    (c_3c_0c_1-c_4c_1-1-c_0)\lambda_1+
+    (c_5-c_6+\frac{1}{2}c_3c_1^2+c_1).
+    $$
+
+    Therefore,
+    the final form of the objective function in terms of $\lambda_1$ is:
+
+    $$
+    \argmin_{\lambda_i\ge0}
+    \left(\frac{1}{2}c_2+\frac{1}{2}c_3c_0^2-c_4c_0\right)\lambda_1^2+
+    (c_3c_0c_1-c_4c_1-1-c_0)\lambda_1+
+    (c_5-c_6+\frac{1}{2}c_3c_1^2+c_1),
+    $$
+    where $c_0,c_1,c_2,c_3,c_4,c_5,c_6$ are defined above.
+
+    Additionally, to solve for $\lambda_1$,
+    let $\frac{\partial(-\hat L)}{\partial\lambda_1}=0$,
+    $$
+    \Rightarrow
+    2\left(\frac{1}{2}c_2+\frac{1}{2}c_3c_0^2-c_4c_0\right)\lambda_1+
+    (c_3c_0c_1-c_4c_1-1-c_0)=0\\
+    \Rightarrow\lambda_1=-\frac{c_3c_0c_1-c_4c_1-1-c_0}{
+        2\left(\frac{1}{2}c_2+\frac{1}{2}c_3c_0^2-c_4c_0\right)
+    }.
+    $$
 
 1. If we treat Gibbs sampling as a special case of MH method,
 what's the formula for the acceptance rate?
