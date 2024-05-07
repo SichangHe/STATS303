@@ -317,3 +317,129 @@ $$
 I(Y|x_i)=H(Y)-H(Y|x_i)\\
 \text{where}\quad H(Y|x_i)=\sum_{x}p(x_i=x)H(Y|x_i=x)
 $$
+
+## statistical learning theory
+
+- Bayes classifier $f^\ast$: minimize expected risk
+- empirical risk minimization (ERM): minimize loss on training data
+- estimation error (training error): because $X$ finite, grow w/ $|\mathcal F|$
+- approximation error (model complexity): because $\mathcal F$ finite
+
+### consistence wrt $\mathcal F$ & $P$
+
+empirical risk $R_n(f)$ close to true risk $R(f)$
+$$
+P \left(
+    |R(f)-R_n(f)|≥ε
+\right)→0\text{ as }n→∞
+$$
+
+- universally consistent wrt $\mathcal F$: $\forall P$
+- Bayes-consistent wrt $P$
+    $$
+    P \left(
+        |R(f^\ast)-R_n(f)|≥ε
+    \right)→0\text{ as }n→∞
+    $$
+- $⇔$ uniform convergence
+    $$
+    P(\sup_{f\in\mathcal F}|R_n(f)-R(f)|>ε)→0
+    $$
+    - sufficiency
+        $$
+        P \left(
+            |R(f)-R_n(f)|≥ε
+        \right)≤P\left(
+            \sup_{f\in\mathcal F}|R_n(f)-R(f)|≥\frac{ε}{2}
+        \right)
+        $$
+- $$
+    P \left(
+        |R(f)-R_n(f)|≥ε
+    \right)≤2\exp(-2nε^2)
+    $$
+
+#### generalization bound
+
+for finite class $\mathcal F=\{f_i\},i=1,…,m$
+$$
+P \left(
+    |R(f)-R_n(f)|≥ε
+\right)≤2m\exp(-2nε^2)
+$$
+
+- proposition: choose $\delta\in(0,1) ⇒$ w/ at least $1-\delta$ probability
+    $$
+    |R(f)-R_n(f)|≤\sqrt{\frac{\ln(2m)-\ln\delta}{2n}}
+    $$
+    - by $\delta:=2m\exp(-2nε^2)$
+
+for infinite class $\mathcal F$
+$$
+P \left(
+    \sup_{f\in\mathcal F}|R(f)-R_n(f)|>ε
+\right)≤2\mathcal N(\mathcal F,2n)\exp\left(\frac{-nε^2}{4}\right)
+$$
+
+- proof:
+    $$
+    P \left(
+        |R(f)-R_n(f)|≥ε
+    \right)≤P \left(
+        \sup_{f\in\mathcal F}|R(f)-R_n(f)|≥\frac{ε}{2}
+    \right)\\
+    ≤2P \left(
+        \sup_{f\in\mathcal F}|R_n(f)-R_n'(f)|≥\frac{ε}{2}
+    \right)\quad\text{by Symmetrization Lemma}\\
+    $$
+    where $R_n'(f)$ is empirical risk of another $n$ sample (ghost sample)
+
+    $⇒ ∃c ≤ \mathcal N(\mathcal F,2n)$ class of $f$ for sample & ghost sample
+- problem: hard to compute shattering coefficient
+
+### shattering coefficient $\mathcal N(\mathcal F,n)$
+
+maximum number of $\mathcal F_{X_1,…,X_n}$,
+    function we can get by restricting $\mathcal F$ to $X_1,…,X_n$
+
+## (Vapnik-Chervonenkis dimension) VC dimension
+
+maximum $n$ s.t. $∃f\in\mathcal F,∀X=\{X_1…,X_n\}$,
+$f$ classify $X$ completely correctly
+
+- for function class $\mathcal F$ w/ VC dimension $d$
+    $$
+    \mathcal N(\mathcal F,n)≤\sum_{i=0}^d{n\choose d}
+    $$
+    - for $n>d$, $\mathcal N(\mathcal F,n)≤\left(
+        \frac{en}{d}
+    \right)^d$
+- ERM is consistence $⇔$ VC dimension finite
+
+### Rademacher complexity
+
+richness of function class $\mathcal F$ in sample set $\{X_i\}$
+
+sample label $\sigma_i=±1,i=1,…,n$
+
+$$
+Rad_n(\mathcal F)=\mathbb E\left[
+    \sup_{f\in\mathcal F}\frac{1}{n}\sum_{i=1}^n\sigma_if(X_i)
+\right]
+$$
+
+solution: for each possible set of $\sigma_i$,
+    find the function $f$ to maximize the inner sum,
+    then take weighted average
+
+- generalization bound: with ≥ $1-\delta$ probability, $∀f\in\mathcal F$,
+    $$
+    R(f)≤R_n(f)+2Rad_n(\mathcal F)+\sqrt{\frac{-\ln(δ)}{2n}}\\
+    ≤R_n(f)+2\sqrt{\frac{d\ln\left(\frac{en}{d}\right)-\ln\delta}{n}}
+    $$
+
+### structural risk minimization (SRM)
+
+to balance training error and model complexity
+
+- e.g. regularization, linear SVM VC $=d+1$, RBF kernel $⇒∞$
